@@ -163,4 +163,6 @@ cs_train["RevolvingUtilizationOfUnsecuredLines"].apply(lambda x: x == 1.0).sum()
 
 Actually there aren't many observations with this feature equal to 1.
 
-![](../diagrams/RevolvingUtilizationOfUnsecuredLines_hist_01.png)
+![](https://github.com/jaredadler/givemesomecredit/blob/master/diagrams/RevolvingUtilizationOfUnsecuredLines_hist_01.png)
+
+
