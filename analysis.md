@@ -925,6 +925,7 @@ print(f"Best AUC from XGBoost: {target_auc_xgb['auc']}")
 
 ```
 
+Best AUC from XGBoost: 0.860 (update later, still running!)
 
 ## Next Steps
 
