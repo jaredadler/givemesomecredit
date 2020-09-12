@@ -832,7 +832,7 @@ viz.save(f"{tld}/diagrams/dtreeviz.svg")
 
 ```
 
-Click [here](https://github.com/jaredadler/givemesomecredit/blob/master/diagrams/dtreeviz.svg) for the decision tree visualization.
+Click [here](https://raw.githubusercontent.com/jaredadler/givemesomecredit/master/diagrams/dtreeviz.svg) for the decision tree visualization.
 
 We can see that the model learns that the most important split is based on the delinquency features (being late on payments), and then for those who are not as delinquent it starts to use the utilization and number of credit lines features for lower splits in the tree.
 
