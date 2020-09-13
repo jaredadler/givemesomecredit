@@ -902,30 +902,23 @@ train_features_resampled_xgb, train_labels_resampled_xgb =\
   SMOTE().fit_resample(train_features_xgb, train_labels_xgb)
 
 xgb_param_grid = {
-        "booster": ["gbtree", "gblinear", "dart"],
         "nthread": [4],
-        "eta": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-        "max_depth": [3, 4, 5, 6, 7],
-        "subsample": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-        "sampling_method": ["uniform", "gradient_based",],
-        "lambda": [1, 2, 3, 4, 5],
-        "alpha": [1, 2, 3, 4, 5],
-        "num_rounds": [10, 20, 30, 40, 50, 100],
-        "n_estimators": [50, 100, 150, 200, 250, 300, 350, 400],
-        "colsample_bytree": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        "num_rounds": [30],
+        "n_estimators": [50, 100, 200],
+        "colsample_bytree": [0.3, 0.5, 0.7]
     }
 
-xgb_model_def = XGBClassifier(verbosity = 0, eval_metric = "auc")
+xgb_model_def = XGBClassifier(verbosity = 2, eval_metric = "auc")
 xgb_model = GridSearchCV(estimator = xgb_model_def, param_grid = xgb_param_grid)
 xgb_model.fit(train_features_xgb, train_labels_xgb)
 predictions_xgb = xgb_model.predict_proba(testval_features_xgb)[:,1]
-target_auc_xgb = roc_auc_score(testval_labels_xgb, predictions)
+target_auc_xgb = roc_auc_score(testval_labels_xgb, predictions_xgb)
 
-print(f"Best AUC from XGBoost: {target_auc_xgb['auc']}")
+print(f"Best AUC from XGBoost: {target_auc_xgb}")
 
 ```
 
-Best AUC from XGBoost: 0.860 (update later, still running!)
+Best AUC from XGBoost: 0.8628090398803969
 
 ## Next Steps
 
