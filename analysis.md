@@ -884,7 +884,31 @@ print(f"Best AUC from Random Forest Classifier: {tuning_results_brf['auc']}")
 
 ```
 
-Best AUC from Random Forest Classifier: 0.8601514308672688
+Best AUC from Random Forest Classifier: 0.8603294364538133
+
+And we can see where we would want to set the model threshold from the ROC curve presumably based on some business constraints false positive rate:
+
+``` python
+
+rf_predictions = tuning_results_brf["model"].predict_proba(test_features)[:,1]
+fpr_rf, tpr_rf, thresholds_rf = roc_curve(test_labels, rf_predictions, pos_label = 1)
+
+plt.figure()
+lw = 2
+plt.plot(fpr_rf, tpr_rf, color = "darkorange",
+         lw = lw, label = "ROC curve (area = %0.2f)" % tuning_results_brf["auc"])
+plt.plot([0, 1], [0, 1], color = 'navy', lw = lw, linestyle = "--")
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.title("ROC Curve for Random Forest")
+plt.legend(loc = "lower right")
+plt.savefig(f"{tld}/diagrams/rf_roc_curve.png")
+
+```
+
+![](https://github.com/jaredadler/givemesomecredit/blob/master/diagrams/rf_roc_curve.png)
 
 
 ## Gradient Boosted Tree Classifier
@@ -919,6 +943,30 @@ print(f"Best AUC from XGBoost: {target_auc_xgb}")
 ```
 
 Best AUC from XGBoost: 0.8628090398803969
+
+Just like random forest, here is the ROC curve for this slightly better result using XGBoost:
+
+``` python
+
+xgb_predictions = xgb_model.predict_proba(test_features)[:,1]
+fpr_xgb, tpr_xgb, thresholds_xgb = roc_curve(testval_labels_xgb, xgb_predictions, pos_label = 1)
+
+plt.figure()
+lw = 2
+plt.plot(fpr_xgb, tpr_xgb, color = "darkorange",
+         lw = lw, label = "ROC curve (area = %0.2f)" % target_auc_xgb)
+plt.plot([0, 1], [0, 1], color = "navy", lw = lw, linestyle = "--")
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.title("ROC Curve for XGBoost")
+plt.legend(loc = "lower right")
+plt.savefig(f"{tld}/diagrams/xgb_roc_curve.png")
+
+```
+
+![](https://github.com/jaredadler/givemesomecredit/blob/master/diagrams/xgb_roc_curve.png)
 
 ## Next Steps
 
